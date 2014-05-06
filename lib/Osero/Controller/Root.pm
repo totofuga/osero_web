@@ -1,6 +1,7 @@
 package Osero::Controller::Root;
 use Moose;
 use namespace::autoclean;
+use Game::Osero;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -33,6 +34,8 @@ sub index :Path :Args(0) {
 
     # Hello World
     # $c->response->body( $c->welcome_message );
+    my $osero = Game::Osero->new();
+    $c->stash()->{osero} = $osero;
     $c->forward( $c->view('HTML') );
 }
 

@@ -1,1 +1,22 @@
-this is a test
+
+<form action="/" method="POST">
+    <table border="1">
+    [%- FOREACH block_line = osero.get_board %]
+        <tr>
+        [% xcount=loop.count %]
+        [%- FOREACH block = block_line %]
+            <td width='20' height='20'>
+            [%- IF block == 0 -%]
+                &nbsp;
+            [%- ELSIF block == 1 -%]
+                ○
+            [%- ELSE -%]
+                ●
+            [%- END -%]
+            <input type="hidden" value="[% xcount %]:[% loop.count %]">
+            </td>
+        [%- END %]
+        </tr>
+    [%- END %]
+    </table>
+</form>
