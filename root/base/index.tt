@@ -1,5 +1,4 @@
-
-<form action="/" method="POST">
+<form action="/" method="POST" name="osero">
     <table border="1">
     [%- FOREACH block_line = osero.get_board %]
         <tr>
@@ -7,7 +6,11 @@
         [%- FOREACH block = block_line %]
             <td width='20' height='20'>
             [%- IF block == 0 -%]
-                &nbsp;
+                [%- IF osero.can_drop(xcount - 1 , loop.count - 1) -%]
+                    <a href="javascript:void(0)" onclick="document.getElementById('now_pos').value = '[% xcount %]:[% loop.count %]'; document.osero.submit();return false;"> &nbsp;&nbsp;&nbsp;</a>
+                [%- ELSE -%]
+                    &nbsp;
+                [%- END -%]
             [%- ELSIF block == 1 -%]
                 ○
             [%- ELSE -%]
@@ -19,4 +22,5 @@
         </tr>
     [%- END %]
     </table>
+    <input type="hidden" id="now_pos" value="">
 </form>

@@ -35,6 +35,19 @@ sub index :Path :Args(0) {
     # Hello World
     # $c->response->body( $c->welcome_message );
     my $osero = Game::Osero->new();
+
+#    if ( $c->req->method eq 'POST' ) {
+#        my $params = $c->req->body_params;
+#        my $board = [];
+#        foreach my $keys ( keys %$params ) {
+#            if ( my ($x, $y) = ($key =~ /(\d):(\d)/) ) {
+#                $board->[][] = 
+#            }
+#        }
+#
+#    } else {
+#    }
+
     $c->stash()->{osero} = $osero;
     $c->forward( $c->view('HTML') );
 }
