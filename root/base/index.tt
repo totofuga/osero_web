@@ -1,3 +1,7 @@
+<html>
+
+<body>
+
 <form action="/" method="POST" name="osero">
     <table border="1">
     [%- FOREACH block_line = osero.get_board %]
@@ -16,11 +20,20 @@
             [%- ELSE -%]
                 ●
             [%- END -%]
-            <input type="hidden" value="[% xcount %]:[% loop.count %]">
+            <input type="hidden" name="[% xcount %]:[% loop.count %]" value="[% block %]">
             </td>
         [%- END %]
         </tr>
     [%- END %]
     </table>
-    <input type="hidden" id="now_pos" value="">
+    <input type="hidden" id="now_pos" name="now_pos" value="">
+    <input type="hidden" id="now_pos" name="turn" value="[% osero.get_turn %]">
 </form>
+
+</body>
+
+<p>
+    [% mess %]
+<p>
+
+</html>

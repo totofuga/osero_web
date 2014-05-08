@@ -36,20 +36,51 @@ sub index :Path :Args(0) {
     # $c->response->body( $c->welcome_message );
     my $osero = Game::Osero->new();
 
-#    if ( $c->req->method eq 'POST' ) {
-#        my $params = $c->req->body_params;
-#        my $board = [];
-#        foreach my $keys ( keys %$params ) {
-#            if ( my ($x, $y) = ($key =~ /(\d):(\d)/) ) {
-#                $board->[][] = 
-#            }
-#        }
-#
-#    } else {
-#    }
+    if ( $c->req->method eq 'POST' ) {
+        my $params = $c->req->body_params;
+
+        my $board = [];
+        foreach my $key ( keys %$params ) {
+            if ( my @a = ($key =~ /(\d):(\d)/) ) {
+                $board->[$a[0] - 1][$a[1] - 1] = $params->{$key};
+            }
+        }
+
+        $osero->set_board($board);
+
+        if( exists $params->{turn} ) {
+            $osero->set_turn($params->{turn});
+        }
+
+        if( exists $params->{now_pos} ) {
+            my $pos = $params->{now_pos};
+            if ( my @a = ($pos =~ /(\d):(\d)/) ) {
+                $osero->drop($a[0] -1 , $a[1] -1);
+            }
+        }
+
+        $osero->set_turn($osero->get_rival_turn);
+
+        $self->drop_com($c, $osero);
+    }
 
     $c->stash()->{osero} = $osero;
     $c->forward( $c->view('HTML') );
+}
+
+sub drop_com {
+    my ($self, $c, $osero) = @_;
+
+    my $can_drop_pos = $osero->get_can_drop_pos;
+
+    if(@$can_drop_pos) {
+        my $rand_pos = $can_drop_pos->[ rand @$can_drop_pos ];
+        $osero->drop($rand_pos->[0] , $rand_pos->[1]);
+    } else {
+        $c->stash->{mess} = "コンピュータはパスしました。\n"
+    }
+
+    $osero->set_turn($osero->get_rival_turn);
 }
 
 =head2 default
