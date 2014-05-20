@@ -1,0 +1,7 @@
+rootLogger=DEBUG, FILEOUT
+
+appender.FILEOUT=Log::Log4perl::Appender::File
+appender.FILEOUT.filename=/var/log/osero_web
+appender.FILEOUT.mode=create
+appender.FILEOUT.layout=PatternLayout
+appender.FILEOUT.layout.ConversionPattern=[%M][%L][%p] %m%n

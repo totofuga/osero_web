@@ -26,6 +26,13 @@
         </tr>
     [%- END %]
     </table>
+
+    [%- UNLESS osero.can_drop -%]
+    <br />
+    <a href="javascript:void(0)" onclick="document.osero.submit();return false;">パス</a> 
+    <br />
+    [%- END -%]
+
     <input type="hidden" id="now_pos" name="now_pos" value="">
     <input type="hidden" id="now_pos" name="turn" value="[% osero.get_turn %]">
 </form>

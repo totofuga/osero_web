@@ -1,4 +1,4 @@
-package Osero::View::HTML;
+package Osero::View::Web;
 use Moose;
 use namespace::autoclean;
 
@@ -11,7 +11,7 @@ __PACKAGE__->config(
 
 =head1 NAME
 
-Osero::View::HTML - TT View for Osero
+Osero::View::Web - TT View for Osero
 
 =head1 DESCRIPTION
 

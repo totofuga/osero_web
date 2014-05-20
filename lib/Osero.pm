@@ -4,6 +4,8 @@ use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
 
+use Catalyst::Log::Log4perl;
+
 # Set flags and add plugins for the application.
 #
 # Note that ORDERING IS IMPORTANT here as plugins are initialized in order,
@@ -16,11 +18,15 @@ use Catalyst::Runtime 5.80;
 # Static::Simple: will serve static files from the application's root
 #                 directory
 
+#    +CatalystX::Profile
 use Catalyst qw/
     -Debug
     ConfigLoader
     Static::Simple
 /;
+
+use FindBin qw($Bin);
+use File::Spec;
 
 extends 'Catalyst';
 
@@ -40,6 +46,21 @@ __PACKAGE__->config(
     # Disable deprecated behavior needed by old applications
     disable_component_resolution_regex_fallback => 1,
     enable_catalyst_header => 1, # Send X-Catalyst header
+
+    'View::Web' => {
+        INCLUDE_PATH => [
+            __PACKAGE__->path_to('root', 'tt'),
+        ]
+    }
+
+);
+
+
+# Logの設定
+__PACKAGE__->log(
+    Catalyst::Log::Log4perl->new(
+        File::Spec->catfile($Bin, '..', 'config', 'logger.conf')
+    )
 );
 
 # Start the application
